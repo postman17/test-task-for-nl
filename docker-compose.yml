@@ -4,16 +4,16 @@ services:
         build: .
         depends_on:
             - database
+            - flower
         env_file:
             - .env
         ports:
             - 8000:8000
         volumes:
             - ./etc/app:/opt/app/etc
-            - ./log/app:/opt/app/log
             - ./tmp:/opt/app/tmp
             - ./static:/opt/app/static
-            - ./rubicon:/opt/app/rubicon
+            - ./project:/opt/app/project
         networks:
             - database
             - redis
@@ -71,10 +71,9 @@ services:
         build: .
         env_file:
             - .env
-        command: sh -c "cd /opt/app/rubicon && celery -A project worker -n celery@%h -c 2 -B -E -s /tmp/celery.%t"
+        command: sh -c "cd /opt/app/project && celery -A project worker -n celery@%h -c 2 -B -E -s /tmp/celery.%t"
         volumes:
-            - ./rubicon:/opt/app/rubicon
-            - ./log/app:/opt/app/log
+            - ./project:/opt/app/project
             - ./tmp:/opt/app/tmp
         depends_on:
             - redis
