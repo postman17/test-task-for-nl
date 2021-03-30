@@ -1,5 +1,4 @@
-from django.db import models
-from django.db.models import F
+from django.db import models, transaction
 
 
 class Video(models.Model):
@@ -69,6 +68,7 @@ class Page(models.Model):
     def __str__(self):
         return self.title
 
+    @transaction.atomic
     def increase_counters(self):
         """Increase page and blocks counters."""
         self.counter += 1
