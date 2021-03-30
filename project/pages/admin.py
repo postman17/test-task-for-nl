@@ -32,5 +32,11 @@ class PageBlockInline(OrderableAdmin, admin.StackedInline):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
+    search_fields = (
+        'title',
+        'blocks__video__title',
+        'blocks__audio__title',
+        'blocks__text__title',
+    )
     list_display = ('title', )
     inlines = (PageBlockInline, )

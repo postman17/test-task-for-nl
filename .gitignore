@@ -2,6 +2,7 @@
 .git/*
 
 .env
+/data/
 
 *.log
 *.sqlite3
